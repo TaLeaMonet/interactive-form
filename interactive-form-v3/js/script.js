@@ -20,4 +20,12 @@ otherJobRole.type = 'hidden';
     }
 });
 
+//Disable color select element. 
+const shirtColors = document.getElementById('shirt-colors').getElementsByTagName('*');
+for (var options of shirtColors) {
+    options.disabled = true;
+}
+
+
+
 
