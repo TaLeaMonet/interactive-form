@@ -26,6 +26,43 @@ for (var options of shirtColors) {
     options.disabled = true;
 }
 
+const shirtDesigns = document.getElementById('shirt-designs');
+//Event listener for Design 'select' element. 
+shirtDesigns.addEventListener("change", (e) => {
+    if(e.target.value === 'js puns' ){
+        for (let options of shirtColors) {
+            options.disabled = false;
+        }
+        const colorOptions = document.getElementById('color');
+        //console.log(colorOptions);
+        for (let options of colorOptions) {
+            colorOptions[1].hidden  = false; 
+            colorOptions[2].hidden = false; 
+            colorOptions[3].hidden = false; 
+
+            colorOptions[4].hidden  = true; 
+            colorOptions[5].hidden = true; 
+            colorOptions[6].hidden = true; 
+        }
+        
+    } else if (e.target.value === 'heart js'){
+        for (let options of shirtColors) {
+            options.disabled = false;
+        }
+        const colorOptions = document.getElementById('color');
+        for (let options of colorOptions) {
+            colorOptions[1].hidden  = true; 
+            colorOptions[2].hidden = true; 
+            colorOptions[3].hidden = true;
+
+            colorOptions[4].hidden  = false; 
+            colorOptions[5].hidden = false; 
+            colorOptions[6].hidden = false;  
+        }
+       
+    }
+});
+
 
 
 
