@@ -22,7 +22,7 @@ otherJobRole.type = 'hidden';
 
 //Disable color select element. 
 const shirtColors = document.getElementById('shirt-colors').getElementsByTagName('*');
-for (var options of shirtColors) {
+for (let options of shirtColors) {
     options.disabled = true;
 }
 
@@ -34,7 +34,7 @@ shirtDesigns.addEventListener("change", (e) => {
             options.disabled = false;
         }
         const colorOptions = document.getElementById('color');
-        //console.log(colorOptions);
+    
         for (let options of colorOptions) {
             colorOptions[1].hidden  = false; 
             colorOptions[2].hidden = false; 
@@ -44,7 +44,7 @@ shirtDesigns.addEventListener("change", (e) => {
             colorOptions[5].hidden = true; 
             colorOptions[6].hidden = true; 
         }
-        
+  
     } else if (e.target.value === 'heart js'){
         for (let options of shirtColors) {
             options.disabled = false;
@@ -58,10 +58,27 @@ shirtDesigns.addEventListener("change", (e) => {
             colorOptions[4].hidden  = false; 
             colorOptions[5].hidden = false; 
             colorOptions[6].hidden = false;  
-        }
-       
+        }  
     }
 });
+
+const activities = document.querySelectorAll('.activities input');
+const activitiesCost = document.getElementById('activities-cost');
+let activityTotalSum = 0;
+
+//Create event listener for checkboxes. 
+document.querySelector('.activities').addEventListener("change", (e) => {
+    const activitySelected = e.target; 
+    const dataCost = parseInt(activitySelected.getAttribute('data-cost'));
+//If checked, increase total amount due. If unchecked, decrease total amount. 
+    if(activitySelected.checked) {
+        activityTotalSum += dataCost;  
+    } else {
+        activityTotalSum -= dataCost;
+    }
+    activitiesCost.innerHTML = `Total:$${activityTotalSum}`;
+});
+
 
 
 
