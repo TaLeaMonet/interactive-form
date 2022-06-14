@@ -38,7 +38,6 @@ shirtDesigns.addEventListener("change", (e) => {
     if(e.target.value === 'js puns' ){
         for (let options of shirtColors) {
             options.disabled = false;
-           
         }
        
         for (let options of colorOptions) {
@@ -124,14 +123,13 @@ paymentMethod.addEventListener("change", (e) => {
 
 //Form validation 
 const form = document.querySelector('form');
-
 //Helper function for name input validation 
 function nameValidator() {
     const nameValue = nameInput.value;
     const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(nameValue);
     if(nameIsValid === false) {
         console.log('A name is required to register for the event. Please enter your name');
-        return false
+        return false;
     } else {
         console.log(nameValue);
         return true;
@@ -145,7 +143,7 @@ function emailValidator() {
     const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
     if(emailIsValid === false) {
         console.log('A valid email address is required to register for the event. Please enter your email address');
-        return false
+        return false;
     } else {
         console.log(emailValue);
         return true;
@@ -153,18 +151,22 @@ function emailValidator() {
 }
 
 //Helper function for activites selection validation  
-// function activitiesValidator() {
-   
-   
-//  }
-
+function activitiesValidator() {
+const activitesSelected = document.querySelectorAll('[type="checkbox"]:checked');
+   if(activitesSelected.length < 1) {
+        console.log('You must select at least one activity to register for the event.');
+        return false; 
+     }  else {
+       console.log(activitesSelected);
+        return true; 
+   }
+ }
 
 // Event listener for form validation 
 form.addEventListener("submit", (e) => {
     e.preventDefault()
     nameValidator();
     emailValidator();
-    // activitiesValidator();
-   
-}) 
+    activitiesValidator();
+}); 
 
