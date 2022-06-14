@@ -30,7 +30,7 @@ const shirtDesigns = document.getElementById('shirt-designs');
 const colorOptions = document.getElementById('color');
 const defaultSelect = colorOptions[0];
 defaultSelect.defaultSelect = true; 
-console.log(defaultSelect);
+//console.log(defaultSelect);
 
 //Event listener for Design 'select' element. 
 shirtDesigns.addEventListener("change", (e) => {
@@ -60,7 +60,7 @@ shirtDesigns.addEventListener("change", (e) => {
        
     
         for (let options of colorOptions) {
-            colorOptions[0].hidden = false;
+            defaultSelect.selectedIndex = -1;
             colorOptions[1].hidden  = true; 
             colorOptions[2].hidden = true; 
             colorOptions[3].hidden = true;
@@ -122,5 +122,49 @@ paymentMethod.addEventListener("change", (e) => {
         }
 });
 
+//Form validation 
+const form = document.querySelector('form');
 
+//Helper function for name input validation 
+function nameValidator() {
+    const nameValue = nameInput.value;
+    const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(nameValue);
+    if(nameIsValid === false) {
+        console.log('A name is required to register for the event. Please enter your name');
+        return false
+    } else {
+        console.log(nameValue);
+        return true;
+    }
+}
+
+const emailElement = document.querySelector('#email');
+//Helper function for email address input validation
+function emailValidator() {
+    const emailValue = emailElement.value;
+    const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
+    if(emailIsValid === false) {
+        console.log('A valid email address is required to register for the event. Please enter your email address');
+        return false
+    } else {
+        console.log(emailValue);
+        return true;
+    }
+}
+
+//Helper function for activites selection validation  
+// function activitiesValidator() {
+   
+   
+//  }
+
+
+// Event listener for form validation 
+form.addEventListener("submit", (e) => {
+    e.preventDefault()
+    nameValidator();
+    emailValidator();
+    // activitiesValidator();
+   
+}) 
 
