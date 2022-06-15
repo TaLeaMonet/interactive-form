@@ -162,11 +162,27 @@ const activitesSelected = document.querySelectorAll('[type="checkbox"]:checked')
    }
  }
 
+ //Helper function for credit card payment method 
+ //The "Card number" field must contain a 13 - 16 digit credit card number with no dashes or spaces.
+const creditCardInput = document.getElementById('cc-num');
+function creditCardValidator() {
+  const creditCardValue = creditCardInput.value; 
+  const creditCardIsValid = /^[0-9]{13}(?:[0-9]{3})?$/.test(creditCardValue);
+  if (creditCardIsValid === false) {
+    console.log('Your credit card number must contain 13-16 digits. Please enter a valid credit card number.');
+    return false; 
+  } else {
+      console.log(creditCardValue);
+      return true; 
+  }
+}
+
 // Event listener for form validation 
 form.addEventListener("submit", (e) => {
     e.preventDefault()
     nameValidator();
     emailValidator();
     activitiesValidator();
+    creditCardValidator();
 }); 
 
