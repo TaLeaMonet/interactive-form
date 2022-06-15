@@ -202,5 +202,16 @@ form.addEventListener("submit", (e) => {
     }
 }); 
 
+//Accessibility 
 
+const checkboxes = document.querySelectorAll('#activities-box input');
+for(let i = 0; i < checkboxes.length; i++) {
+    const parentElement = checkboxes[i].parentElement;
+    checkboxes[i].addEventListener('focus', (e) => {
+        parentElement.classList.add('focus');
+    }) 
+    checkboxes[i].addEventListener('blur', (e) => {
+        parentElement.classList.remove('focus');
+    })
+}
 
