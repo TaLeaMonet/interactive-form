@@ -191,6 +191,20 @@ function zipCodeValidator() {
 
 }
 
+//Helper funcion for CVV
+const cvvInput = document.getElementById('cvv');
+function cvvValidator() {
+    const cvvValue = cvvInput.value; 
+    const cvvIsValid = /^[0-9]{3}$/.test(cvvValue);
+    if(cvvIsValid === false) {
+        console.log('Please enter a valid cvv number');
+        return false; 
+    } else {
+        console.log(cvvValue);
+        return true; 
+    }
+}
+
 // Event listener for form validation 
 form.addEventListener("submit", (e) => {
     e.preventDefault()
@@ -199,5 +213,8 @@ form.addEventListener("submit", (e) => {
     activitiesValidator();
     creditCardValidator();
     zipCodeValidator();
+    cvvValidator();
 }); 
+
+
 
