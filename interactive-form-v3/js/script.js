@@ -128,10 +128,8 @@ function nameValidator() {
     const nameValue = nameInput.value;
     const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(nameValue);
     if(nameIsValid === false) {
-        console.log('A name is required to register for the event. Please enter your name');
         return false;
     } else {
-        console.log(nameValue);
         return true;
     }
 }
@@ -142,10 +140,8 @@ function emailValidator() {
     const emailValue = emailElement.value;
     const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
     if(emailIsValid === false) {
-        console.log('A valid email address is required to register for the event. Please enter your email address');
         return false;
     } else {
-        console.log(emailValue);
         return true;
     }
 }
@@ -154,10 +150,8 @@ function emailValidator() {
 function activitiesValidator() {
 const activitesSelected = document.querySelectorAll('[type="checkbox"]:checked');
    if(activitesSelected.length < 1) {
-        console.log('You must select at least one activity to register for the event.');
         return false; 
      }  else {
-       console.log(activitesSelected);
         return true; 
    }
  }
@@ -168,10 +162,8 @@ function creditCardValidator() {
   const creditCardValue = creditCardInput.value; 
   const creditCardIsValid = /^[0-9]{13}(?:[0-9]{3})?$/.test(creditCardValue);
   if (creditCardIsValid === false) {
-    console.log('Your credit card number must contain 13-16 digits with no dashes, spaces or non digit characters. Please enter a valid credit card number.');
     return false; 
   } else {
-      console.log(creditCardValue);
       return true; 
   }
 }
@@ -182,10 +174,8 @@ function zipCodeValidator() {
     const zipCodeValue = zipCodeInput.value; 
     const zipIsValid = /^[0-9]{5}$/.test(zipCodeValue);
     if(zipIsValid === false) {
-        console.log('Please enter a valid zip code');
         return false; 
     } else {
-        console.log(zipCodeValue);
         return true; 
     }
 
@@ -197,23 +187,19 @@ function cvvValidator() {
     const cvvValue = cvvInput.value; 
     const cvvIsValid = /^[0-9]{3}$/.test(cvvValue);
     if(cvvIsValid === false) {
-        console.log('Please enter a valid cvv number');
         return false; 
     } else {
-        console.log(cvvValue);
         return true; 
     }
 }
 
 // Event listener for form validation 
 form.addEventListener("submit", (e) => {
-    e.preventDefault()
-    nameValidator();
-    emailValidator();
-    activitiesValidator();
-    creditCardValidator();
-    zipCodeValidator();
-    cvvValidator();
+    if(!nameValidator() || !emailValidator() || !activitiesValidator() || 
+       !creditCardValidator() || !zipCodeValidator() || !cvvValidator()) {
+        e.preventDefault()
+        console.log('One or more fields are invalid.');
+    }
 }); 
 
 
