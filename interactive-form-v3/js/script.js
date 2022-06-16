@@ -22,52 +22,22 @@ otherJobRole.type = 'hidden';
 
 //Disable color select element. 
 const shirtColors = document.getElementById('shirt-colors').getElementsByTagName('*');
-for (let options of shirtColors) {
-    options.disabled = true;
-}
-
 const shirtDesigns = document.getElementById('shirt-designs');
 const colorOptions = document.getElementById('color');
-const defaultSelect = colorOptions[0];
-defaultSelect.defaultSelect = true; 
-//console.log(defaultSelect);
-
+colorOptions.disabled = true; 
 //Event listener for Design 'select' element. 
 shirtDesigns.addEventListener("change", (e) => {
-    defaultSelect.defaultSelected = true; 
-    if(e.target.value === 'js puns' ){
-        for (let options of shirtColors) {
-            options.disabled = false;
+    colorOptions.removeAttribute("disabled", false); 
+    for(let i = 0; i < colorOptions.length; i++) {
+        const targetValue = e.target.value; 
+        const dataTheme = colorOptions[i].getAttribute("data-theme"); 
+        if(targetValue === dataTheme) {
+            colorOptions[i].hidden = false;
+            colorOptions[i].select = true;  
+        } else {
+            colorOptions[i].hidden = true; 
+            colorOptions[i].select = false; 
         }
-       
-        for (let options of colorOptions) {
-            colorOptions[0].hidden = false; 
-            colorOptions[1].hidden  = false; 
-            colorOptions[2].hidden = false; 
-            colorOptions[3].hidden = false; 
-
-            colorOptions[4].hidden  = true; 
-            colorOptions[5].hidden = true; 
-            colorOptions[6].hidden = true; 
-        }
-  
-    } else if (e.target.value === 'heart js'){
-        for (let options of shirtColors) {
-            options.disabled = false;
-            defaultSelect.defaultSelected = true; 
-        }
-       
-    
-        for (let options of colorOptions) {
-            defaultSelect.selectedIndex = -1;
-            colorOptions[1].hidden  = true; 
-            colorOptions[2].hidden = true; 
-            colorOptions[3].hidden = true;
-
-            colorOptions[4].hidden  = false; 
-            colorOptions[5].hidden = false; 
-            colorOptions[6].hidden = false;  
-        }  
     }
 });
 
@@ -128,8 +98,10 @@ function nameValidator() {
     const nameValue = nameInput.value;
     const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(nameValue);
     if(nameIsValid === false) {
+        validationFail(nameInput);
         return false;
     } else {
+        validationPass(nameInput);
         return true;
     }
 }
@@ -140,18 +112,24 @@ function emailValidator() {
     const emailValue = emailElement.value;
     const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
     if(emailIsValid === false) {
+        validationFail(emailElement);
         return false;
     } else {
+        validationPass(emailElement);
         return true;
     }
 }
 
 //Helper function for activites selection validation  
+const activitiesSection = document.getElementById('activities-box');
+
 function activitiesValidator() {
-const activitesSelected = document.querySelectorAll('[type="checkbox"]:checked');
-   if(activitesSelected.length < 1) {
+const activitiesSelected = document.querySelectorAll('[type="checkbox"]:checked');
+   if(activitiesSelected.length < 1) {
+       validationFail(activitiesSection);
         return false; 
      }  else {
+        validationPass(activitiesSection);
         return true; 
    }
  }
@@ -162,8 +140,10 @@ function creditCardValidator() {
   const creditCardValue = creditCardInput.value; 
   const creditCardIsValid = /^[0-9]{13}(?:[0-9]{3})?$/.test(creditCardValue);
   if (creditCardIsValid === false) {
+    validationFail(creditCardInput);
     return false; 
   } else {
+    validationPass(creditCardInput);
       return true; 
   }
 }
@@ -174,8 +154,10 @@ function zipCodeValidator() {
     const zipCodeValue = zipCodeInput.value; 
     const zipIsValid = /^[0-9]{5}$/.test(zipCodeValue);
     if(zipIsValid === false) {
+        validationFail(zipCodeInput);
         return false; 
     } else {
+        validationPass(zipCodeInput);
         return true; 
     }
 
@@ -187,14 +169,17 @@ function cvvValidator() {
     const cvvValue = cvvInput.value; 
     const cvvIsValid = /^[0-9]{3}$/.test(cvvValue);
     if(cvvIsValid === false) {
+        validationFail(cvvInput);
         return false; 
     } else {
+        validationPass(cvvInput);
         return true; 
     }
 }
 
 // Event listener for form validation 
 form.addEventListener("submit", (e) => {
+    e.preventDefault()
     if(!nameValidator() || !emailValidator() || !activitiesValidator() || 
        !creditCardValidator() || !zipCodeValidator() || !cvvValidator()) {
         e.preventDefault()
@@ -202,9 +187,9 @@ form.addEventListener("submit", (e) => {
     }
 }); 
 
-//Accessibility 
-
-const checkboxes = document.querySelectorAll('#activities-box input');
+//Accessibility ac
+const checkboxes = document.querySelectorAll('[type="checkbox"]');
+//Loop over checkbox inputs listening for 'focus' and 'blur' events on targeted input. 
 for(let i = 0; i < checkboxes.length; i++) {
     const parentElement = checkboxes[i].parentElement;
     checkboxes[i].addEventListener('focus', (e) => {
@@ -214,4 +199,21 @@ for(let i = 0; i < checkboxes.length; i++) {
         parentElement.classList.remove('focus');
     })
 }
+
+//Validation helper functions for pass or fail
+function validationPass(element) {
+    element.parentElement.classList.add('valid');
+    console.log(element.parentElement);
+    element.parentElement.classList.remove('not-valid');
+    element.parentElement.lastElementChild.style.display = 'hidden';
+}
+
+function validationFail(element) {
+    element.parentElement.classList.add('not-valid');
+    console.log(element.parentElement);
+    element.parentElement.classList.remove('valid');
+    element.parentElement.lastElementChild.style.display = 'block';
+}
+
+
 
