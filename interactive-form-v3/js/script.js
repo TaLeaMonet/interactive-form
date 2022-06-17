@@ -1,3 +1,5 @@
+
+//Basic Info Section
 //Selects the input with the id of name and makes it the focus state on page load. 
 const nameInput = document.getElementById('name');
 nameInput.focus();
@@ -20,7 +22,7 @@ otherJobRole.type = 'hidden';
     }
 });
 
- 
+ //T-shirt Info Section
 const shirtDesigns = document.getElementById('shirt-designs');
 const colorOptions = document.getElementById('color');
 //Disable color select element.
@@ -41,6 +43,8 @@ shirtDesigns.addEventListener("change", (e) => {
     }
 });
 
+
+//Register For Activities Section
 const activities = document.getElementById('activities');
 const activitiesCost = document.getElementById('activities-cost');
 let activityTotalSum = 0;
@@ -58,7 +62,7 @@ activities.addEventListener("change", (e) => {
     activitiesCost.innerHTML = `Total:$${activityTotalSum}`;
 });
 
-//Payment info section 
+//Payment Info Section 
 const paymentMethod = document.getElementById('payment');
 
 //Make credit card option the default option when the page is loaded. 
@@ -93,16 +97,18 @@ paymentMethod.addEventListener("change", (e) => {
 
 //Form validation 
 const form = document.querySelector('form');
+const valid = true; 
+const notValid = false; 
 //Helper function for name input validation 
 function nameValidator() {
     const nameValue = nameInput.value;
     const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(nameValue);
     if(nameIsValid === false) {
         validationFail(nameInput);
-        return false;
+        return notValid;
     } else {
         validationPass(nameInput);
-        return true;
+        return valid;
     }
 }
 
@@ -113,25 +119,24 @@ function emailValidator() {
     const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
     if(emailIsValid === false) {
         validationFail(emailElement);
-        return false;
+        return notValid;
     } else {
         validationPass(emailElement);
-        return true;
+        return valid;
     }
 }
 
 //Helper function for activites selection validation  
-const activitiesSection = document.getElementById('activities-box');
 
 function activitiesValidator() {
 const activitiesSelected = document.querySelectorAll('[type="checkbox"]:checked');
-console.log(activitiesSelected);
+const activitiesSection = document.getElementById('activities-box');
    if(activitiesSelected.length < 1) {
        validationFail(activitiesSection);
-        return false; 
+        return notValid; 
      }  else {
         validationPass(activitiesSection);
-        return true; 
+        return valid; 
    }
  }
 
@@ -142,10 +147,10 @@ function creditCardValidator() {
   const creditCardIsValid = /^[0-9]{13}(?:[0-9]{3})?$/.test(creditCardValue);
   if (creditCardIsValid === false) {
     validationFail(creditCardInput);
-    return false; 
+    return notValid; 
   } else {
     validationPass(creditCardInput);
-      return true; 
+      return valid; 
   }
 }
 
@@ -156,10 +161,10 @@ function zipCodeValidator() {
     const zipIsValid = /^[0-9]{5}$/.test(zipCodeValue);
     if(zipIsValid === false) {
         validationFail(zipCodeInput);
-        return false; 
+        return notValid; 
     } else {
         validationPass(zipCodeInput);
-        return true; 
+        return valid; 
     }
 
 }
@@ -171,24 +176,39 @@ function cvvValidator() {
     const cvvIsValid = /^[0-9]{3}$/.test(cvvValue);
     if(cvvIsValid === false) {
         validationFail(cvvInput);
-        return false; 
+        return notValid; 
     } else {
         validationPass(cvvInput);
-        return true; 
+        return valid; 
     }
 }
 
 // Event listener for form validation 
 form.addEventListener("submit", (e) => {
     e.preventDefault()
-    if(!nameValidator() || !emailValidator() || !activitiesValidator() || 
-       !creditCardValidator() || !zipCodeValidator() || !cvvValidator()) {
+    if(!nameValidator()) {
         e.preventDefault()
-        console.log('One or more fields are invalid.');
+    }  
+    if (!emailValidator()) {
+        e.preventDefault()
+    }  
+    if (!activitiesValidator()) {
+        e.preventDefault()
+    }
+    if(paymentMethod.value === 'credit-card') {
+       if(!creditCardValidator()){
+        e.preventDefault()
+       } 
+      if(!zipCodeValidator()) {
+        e.preventDefault()
+      }
+       if (!cvvValidator()) {
+        e.preventDefault()
+       }
     }
 }); 
 
-//Accessibility ac
+//Accessibility 
 const checkboxes = document.querySelectorAll('[type="checkbox"]');
 //Loop over checkbox inputs listening for 'focus' and 'blur' events on targeted input. 
 for(let i = 0; i < checkboxes.length; i++) {
@@ -202,19 +222,21 @@ for(let i = 0; i < checkboxes.length; i++) {
 }
 
 //Validation helper functions for pass or fail
-function validationPass(element) {
-    element.parentElement.classList.add('valid');
-    console.log(element.parentElement);
-    element.parentElement.classList.remove('not-valid');
-    element.parentElement.lastElementChild.style.display = 'hidden';
-}
-
 function validationFail(element) {
     element.parentElement.classList.add('not-valid');
     console.log(element.parentElement);
-    element.parentElement.classList.remove('valid');
-    element.parentElement.lastElementChild.style.display = 'block';
+    element.parentElement.lastElementChild.style.display = 'block';   
 }
+
+function validationPass(element) {
+    element.parentElement.classList.add('valid');
+    element.parentElement.lastElementChild.style.display = 'none';
+    console.log(element.parentElement);
+    element.parentElement.classList.remove('not-valid');
+    
+}
+
+
 
 
 
