@@ -20,24 +20,24 @@ otherJobRole.type = 'hidden';
     }
 });
 
-//Disable color select element. 
-const shirtColors = document.getElementById('shirt-colors').getElementsByTagName('*');
+ 
 const shirtDesigns = document.getElementById('shirt-designs');
 const colorOptions = document.getElementById('color');
+//Disable color select element.
 colorOptions.disabled = true; 
 //Event listener for Design 'select' element. 
 shirtDesigns.addEventListener("change", (e) => {
     colorOptions.removeAttribute("disabled", false); 
     for(let i = 0; i < colorOptions.length; i++) {
         const targetValue = e.target.value; 
-        const dataTheme = colorOptions[i].getAttribute("data-theme"); 
-        if(targetValue === dataTheme) {
-            colorOptions[i].hidden = false;
-            colorOptions[i].select = true;  
-        } else {
-            colorOptions[i].hidden = true; 
-            colorOptions[i].select = false; 
-        }
+         const dataTheme = colorOptions.children[i].getAttribute("data-theme"); 
+        if(targetValue !== dataTheme) {
+            colorOptions.children[i].hidden = true;
+                 colorOptions.children[i].removeAttribute('selected');  
+             } else {
+                 colorOptions.children[i].hidden = false; 
+                 colorOptions.children[i].setAttribute('selected', true); 
+             }
     }
 });
 
@@ -125,6 +125,7 @@ const activitiesSection = document.getElementById('activities-box');
 
 function activitiesValidator() {
 const activitiesSelected = document.querySelectorAll('[type="checkbox"]:checked');
+console.log(activitiesSelected);
    if(activitiesSelected.length < 1) {
        validationFail(activitiesSection);
         return false; 
