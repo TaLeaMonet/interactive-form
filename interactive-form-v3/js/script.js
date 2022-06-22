@@ -222,12 +222,10 @@ for(let i = 0; i < checkboxes.length; i++) {
 function validationPass(element) {
     element.parentElement.classList.add('valid');
     element.parentElement.lastElementChild.style.display = 'none';
-    console.log(element.parentElement);
     element.parentElement.classList.remove('not-valid');
 }
 function validationFail(element) {
-    element.parentElement.classList.add('not-valid');
-    console.log(element.parentElement);
+    element.parentElement.classList.add('not-valid');;
     element.parentElement.lastElementChild.style.display = 'block';   
 }
 
