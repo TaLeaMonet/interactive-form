@@ -4,8 +4,6 @@
 const nameInput = document.getElementById('name');
 nameInput.focus();
 nameInput.select();
-
-
 const jobRoleOption = document.getElementById('title');
 //Selects the job option input and the optional field for 'other' job role. 
 const otherJobRole = document.getElementById('other-job-role');
@@ -49,7 +47,7 @@ const activities = document.getElementById('activities');
 const activitiesCost = document.getElementById('activities-cost');
 let activityTotalSum = 0;
 
-//Create event listener for checkboxes. 
+//Event listener for checkboxes. 
 activities.addEventListener("change", (e) => {
     const activitySelected = e.target; 
     const dataCost = parseInt(activitySelected.getAttribute('data-cost'));
@@ -126,11 +124,10 @@ function emailValidator() {
     }
 }
 
-//Helper function for activites selection validation  
-
+const activitiesSection = document.getElementById('activities-box')
+//Helper function for activites selection   
 function activitiesValidator() {
-const activitiesSelected = document.querySelectorAll('[type="checkbox"]:checked');
-const activitiesSection = document.getElementById('activities-box');
+const activitiesSelected = document.querySelectorAll('[type="checkbox"]:checked');;
    if(activitiesSelected.length < 1) {
        validationFail(activitiesSection);
         return notValid; 
@@ -169,7 +166,7 @@ function zipCodeValidator() {
 
 }
 
-//Helper funcion for CVV
+//Helper function for CVV
 const cvvInput = document.getElementById('cvv');
 function cvvValidator() {
     const cvvValue = cvvInput.value; 
@@ -222,19 +219,18 @@ for(let i = 0; i < checkboxes.length; i++) {
 }
 
 //Validation helper functions for pass or fail
+function validationPass(element) {
+    element.parentElement.classList.add('valid');
+    element.parentElement.lastElementChild.style.display = 'none';
+    console.log(element.parentElement);
+    element.parentElement.classList.remove('not-valid');
+}
 function validationFail(element) {
     element.parentElement.classList.add('not-valid');
     console.log(element.parentElement);
     element.parentElement.lastElementChild.style.display = 'block';   
 }
 
-function validationPass(element) {
-    element.parentElement.classList.add('valid');
-    element.parentElement.lastElementChild.style.display = 'none';
-    console.log(element.parentElement);
-    element.parentElement.classList.remove('not-valid');
-    
-}
 
 
 
