@@ -79,6 +79,7 @@ bitCoinPayment.style.display = 'none';
 paymentMethod.addEventListener("change", (e) => {
         if(e.target.value === 'paypal') {
            creditCardPayment.style.display = 'none';
+           bitCoinPayment.style.display = 'none';
             payPalPayment.style.display = 'block';
         } 
         if(e.target.value === 'bitcoin') {
@@ -182,7 +183,6 @@ function cvvValidator() {
 
 // Event listener for form validation 
 form.addEventListener("submit", (e) => {
-    e.preventDefault()
     if(!nameValidator()) {
         e.preventDefault()
     }  
